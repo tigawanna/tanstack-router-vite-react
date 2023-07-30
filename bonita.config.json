@@ -1,0 +1,1 @@
+{"root_dir":"./src","root_styles":"./src/index.css","framework":"React+Vite","tailwind":{"tw_config":"tailwind.config.js","tw_plugins":["daisyui","tailwindcss-animate","tailwind-scrollbar","tailwindcss-elevation"]},"panda":{"panda_config_path":"panda.config.ts"}}
