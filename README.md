@@ -1,27 +1,99 @@
-# React + TypeScript + Vite
+# React + TypeScript + Tanstack Router
+ 
+ This is a basic starter template for React + TypeScript + Tanstack Router.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+it comprises of 
 
-Currently, two official plugins are available:
+  |   Path        |       Description        |
+  |---------------|---------------------------|
+  |  /            |    root layout + route      |
+  |  /profile     |    profile route            |
+  |  /profile/$id  | dynamic profile route |
+  |  /admin       |  protected route       |
+  |  /auth/ | login route (will redirect if already logged in) |
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+ # tips
+ - to use params in routes ( dynamic routes )
+  
+ 
+```ts
+  const userRoute = new Route({
+  getParentRoute: () => profileLayout,
+  path: "$id",
+  component: ProfileUser
+})
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+```tsx 
+  <Link to="/profile/$id" params={{ id: "marko" }}>
+        Marko Profile
+      </Link>
+      <Link to="/profile/$id" params={{ id: "polo" }}>
+        Polo Profile
+      </Link>
+  ```
+
+
+- to use search params
+
+```tsx
+  export const authlayout = new Route({
+  getParentRoute: () => rootLayout,
+  path: "auth",
+  component: AuthLayout,
+  validateSearch: (search: Record<string, unknown>): AuthSearch => {
+    // validate and parse the search params into a typed state
+    return {
+      // you can use zod or valibot to validate this 
+      redirect: (search.redirect as string) ?? "/",
+    };
+  },
+});
+```
+```ts
+   import { authlayout } from "./config";
+  const router = useRouter();
+// include the route id for better typesafety
+  const { redirect } = useSearch({ from: authlayout.id });
+
+  //  if already , redirect fomr the login page to the recent page
+  useEffect(() => {
+    if (is_authed) {
+      router.navigate({
+        to: redirect,
+        // @ts-expect-error
+        search: (prev) => ({ redirect: prev?.redirect }),
+      });
+    }
+  });
+```
+
+- The above is being used in conjunction with a layout level auth guard
+
+```tsx
+import { Outlet, useRouter } from "@tanstack/router";
+import { useEffect } from "react";
+
+interface AdminLayoutProps {}
+
+export function AdminLayout({}: AdminLayoutProps) {
+  const ls_is_authed = localStorage.getItem("is_authed");
+  const is_authed = ls_is_authed === "true";
+  const router = useRouter();
+  useEffect(() => {
+    if (!is_authed) {
+      router.navigate({
+        to: "/auth",
+        search: {
+          redirect: "/admin",
+        },
+      });
+    }
+  });
+  return (
+    <div className="w-full min-h-full flex flex-col items-center justify-center">
+      <Outlet />
+    </div>
+  );
+}
+```
