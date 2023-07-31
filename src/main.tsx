@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { QueryClient, QueryClientProvider, MutationCache } from "@tanstack/react-query";
 import { Router, RouterContext, RouterProvider } from "@tanstack/router";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
 import App from "./App";
 import { routes } from "./pages/routes/routes";
 
@@ -59,6 +59,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
       <RouterProvider router={router} />
     </React.StrictMode>
-    <ReactQueryDevtools initialIsOpen={false} />
+
   </QueryClientProvider>
 );

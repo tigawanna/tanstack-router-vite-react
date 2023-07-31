@@ -1,27 +1,26 @@
-import { useIsFetching } from "@tanstack/react-query";
 import { Link, Outlet, useRouter } from "@tanstack/router";
-import { TanStackRouterDevtools } from "@tanstack/router-devtools";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { themeChange } from "theme-change";
 import { Nprogress } from "./components/navigation/pprogress/Nprogress";
-
+import { DevTanStackQueryDevtools, DevTanStackRouterDevtools } from "./pages/routes/Devtools";
 
 function App() {
-
   useEffect(() => {
     themeChange(false);
     // 👆 false parameter is required for react project
   }, []);
+
   const [drawerOpen, setDrawerOpen] = useState(false);
-// const isFetching = useIsFetching();
-const router = useRouter();
-const status = router.state.status
+  // const isFetching = useIsFetching();
+  const router = useRouter();
+  const status = router.state.status;
   const toggleDrawer = () => {
     setDrawerOpen((open) => !open);
   };
+
   return (
     <div className="w-full min-h-full flex flex-col items-center justify-center ">
-     <Nprogress isAnimating={status==="pending"}/>
+      <Nprogress isAnimating={status === "pending"} />
       <div className="drawer ">
         <input
           id="my-drawer-3"
@@ -50,7 +49,11 @@ const status = router.state.status
               </label>
             </div>
 
-            <div className="flex-1 px-2 mx-2 ">Navbar Title</div>
+            <div className="bg-muted border-b-2 flex items-center justify-center p-1">
+              <Link to="/" className="font-bold text-3xl  ">
+                Home
+              </Link>
+            </div>
             <div className="flex-none hidden md:flex">
               <ul className="w-full h-full gap-5 flex items-center justify-center">
                 {/* Navbar menu content here */}
@@ -91,8 +94,8 @@ const status = router.state.status
           <ul className="flex flex-col  h-full bg-base-200 gap-2 justify-start items-center">
             {/* Sidebar content here */}
 
-            <div className="w-full bg-muted border-b-2 flex items-center justify-center p-3">
-              <Link to="/" className="font-bold text-2xl text-accent ">
+            <div className="bg-muted border-b-2 flex items-center justify-center p-3">
+              <Link to="/" className="font-bold text-3xl p-2 ">
                 Home
               </Link>
             </div>
@@ -127,7 +130,10 @@ const status = router.state.status
         </div>
       </div>
 
-      {import.meta.env.DEV ?? <TanStackRouterDevtools />}
+      <Suspense fallback={null}>
+        <DevTanStackQueryDevtools position="left" />
+        <DevTanStackRouterDevtools />
+      </Suspense>
     </div>
   );
 }
