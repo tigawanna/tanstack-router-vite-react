@@ -28,12 +28,10 @@ export const postsIndexRoute = new Route({
   },
 });
 
-
 export const onePostRoute = new Route({
   getParentRoute: () => postsLayout,
   path: "$postId",
   loader: async ({ params: { postId }, context: { queryClient } }) => {
-    
     await queryClient?.ensureQueryData({
       queryKey: ["posts", postId],
       queryFn: () => fetchPostById(postId),
@@ -46,7 +44,10 @@ export const onePostRoute = new Route({
         enabled: !!postId,
       });
   },
-  component:OnePostPage
+  component: OnePostPage,
 });
 
-export const postsRoute = postsLayout.addChildren([postsIndexRoute, onePostRoute]);
+export const postsRoute = postsLayout.addChildren([
+  postsIndexRoute,
+  onePostRoute,
+]);

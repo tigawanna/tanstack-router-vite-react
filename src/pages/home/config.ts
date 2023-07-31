@@ -7,5 +7,3 @@ export const homeRoute = new Route({
   path: "/",
   component: HomePage,
 });
-
-

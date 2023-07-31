@@ -19,5 +19,5 @@ export const DevTanStackQueryDevtools = import.meta.env.PROD
         default: res.ReactQueryDevtools,
         // For Embedded Mode
         // default: res.TanStackRouterDevtoolsPanel
-      }))
+      })),
     );
