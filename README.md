@@ -11,6 +11,9 @@ it comprises of
   |  /profile/$id  | dynamic profile route |
   |  /admin       |  protected route       |
   |  /auth/ | login route (will redirect if already logged in) |
+  | /posts       | posts route + query loader |
+  | /post       | post route + query loader |
+
 
  # tips
  - to use params in routes ( dynamic routes )
@@ -96,4 +99,17 @@ export function AdminLayout({}: AdminLayoutProps) {
     </div>
   );
 }
+```
+- to get type safety the loaders you can import the route and use the loader from that
+
+```ts
+  const postsQuery = postsIndexRoute.useLoader()();
+```
+- you can listen for navigation pending state and show a NProgress bar for better UX
+```tsx
+  const router = useRouter();
+  const status = router.state.status;
+  ---- 
+  ---- 
+  <Nprogress isAnimating={status === "pending"} />
 ```
