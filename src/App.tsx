@@ -1,19 +1,27 @@
-import { Link, Outlet } from "@tanstack/router";
+import { useIsFetching } from "@tanstack/react-query";
+import { Link, Outlet, useRouter } from "@tanstack/router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { useEffect, useState } from "react";
 import { themeChange } from "theme-change";
+import { Nprogress } from "./components/navigation/pprogress/Nprogress";
+
 
 function App() {
+
   useEffect(() => {
     themeChange(false);
     // 👆 false parameter is required for react project
   }, []);
   const [drawerOpen, setDrawerOpen] = useState(false);
+// const isFetching = useIsFetching();
+const router = useRouter();
+const status = router.state.status
   const toggleDrawer = () => {
     setDrawerOpen((open) => !open);
   };
   return (
     <div className="w-full min-h-full flex flex-col items-center justify-center ">
+     <Nprogress isAnimating={status==="pending"}/>
       <div className="drawer ">
         <input
           id="my-drawer-3"
@@ -32,14 +40,12 @@ function App() {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  className="inline-block w-6 h-6 stroke-current"
-                >
+                  className="inline-block w-6 h-6 stroke-current">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  ></path>
+                    d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
               </label>
             </div>
@@ -50,22 +56,16 @@ function App() {
                 {/* Navbar menu content here */}
 
                 <li className="w-full  flex items-center  justify-start gap-5 bg-muted">
-                  <Link
-                    to="/"
-                    activeProps={{ className: "text-info font-bold" }}
-                  >
+                  <Link to="/" activeProps={{ className: "text-info font-bold" }}>
                     Home
                   </Link>
-                  <Link
-                    to="/profile"
-                    activeProps={{ className: "text-info font-bold" }}
-                  >
+                  <Link to="/posts" activeProps={{ className: "text-info font-bold" }}>
+                    posts
+                  </Link>
+                  <Link to="/profile" activeProps={{ className: "text-info font-bold" }}>
                     profile
                   </Link>
-                  <Link
-                    to="/admin"
-                    activeProps={{ className: "text-info font-bold" }}
-                  >
+                  <Link to="/admin" activeProps={{ className: "text-info font-bold" }}>
                     admin
                   </Link>
                 </li>
@@ -98,22 +98,18 @@ function App() {
             </div>
             <li
               onClick={() => setDrawerOpen(false)}
-              className="w-full h-full flex flex-col  items-center justify-start gap-5 bg-muted"
-            >
+              className="w-full h-full flex flex-col  items-center justify-start gap-5 bg-muted">
               <Link to="/" activeProps={{ className: "text-info font-bold" }}>
                 Home
               </Link>
+              <Link to="/posts" activeProps={{ className: "text-info font-bold" }}>
+                posts
+              </Link>
 
-              <Link
-                to="/profile"
-                activeProps={{ className: "text-info font-bold" }}
-              >
+              <Link to="/profile" activeProps={{ className: "text-info font-bold" }}>
                 profile
               </Link>
-              <Link
-                to="/admin"
-                activeProps={{ className: "text-info font-bold" }}
-              >
+              <Link to="/admin" activeProps={{ className: "text-info font-bold" }}>
                 admin
               </Link>
             </li>

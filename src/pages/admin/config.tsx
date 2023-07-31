@@ -1,5 +1,5 @@
 import { Route } from "@tanstack/router";
-import { rootLayout } from "../routes/router";
+import { rootLayout } from "@/main";
 import { AdminLayout } from "./AdminLayout";
 import { AdminPage } from "./AdminPage";
 

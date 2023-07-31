@@ -2,7 +2,7 @@ import { Route } from "@tanstack/router";
 import { ProfilePage } from "./ProfilePage";
 import { ProfileLayout } from "./ProfileLayout";
 import { ProfileUser } from "./ProfileUser";
-import { rootLayout } from "../routes/router";
+import { rootLayout } from "@/main";
 
 const profileLayout = new Route({
   getParentRoute: () => rootLayout,

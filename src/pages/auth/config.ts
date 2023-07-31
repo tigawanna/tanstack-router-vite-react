@@ -1,5 +1,5 @@
 import { Route } from "@tanstack/router";
-import { rootLayout } from "../routes/router";
+import { rootLayout } from "@/main";
 import { AuthLayout } from "./AuthLayout";
 import { LoginUser } from "./LoginPage";
 import { SignupPage } from "./Signuppage";
