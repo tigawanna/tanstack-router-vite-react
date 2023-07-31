@@ -2,7 +2,7 @@ import { Link, Outlet, useRouter } from "@tanstack/router";
 import { Suspense, useEffect, useState } from "react";
 import { themeChange } from "theme-change";
 import { Nprogress } from "./components/navigation/pprogress/Nprogress";
-import { DevTanStackQueryDevtools, DevTanStackRouterDevtools } from "./pages/routes/Devtools";
+import { DevTanStackQueryDevtools, DevTanStackRouterDevtools } from "./components/Devtools";
 
 function App() {
   useEffect(() => {
