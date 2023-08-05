@@ -93,7 +93,7 @@ function App() {
                 <li className="flex items-center justify-evenly">
                   <select data-choose-theme className=" select select-sm">
                     <option value="">Default</option>
-                    <option value="bonita">Bonita</option>
+                    <option value="lofi">Bonita</option>
                     <option value="dark">Dark</option>
                     <option value="light">light</option>
                     <option value="cupcake">Cupcake</option>
