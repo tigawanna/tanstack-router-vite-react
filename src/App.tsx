@@ -6,6 +6,8 @@ import {
   DevTanStackQueryDevtools,
   DevTanStackRouterDevtools,
 } from "./components/Devtools";
+import { ThemeToggle } from "./components/navigation/Theme";
+import { RoutesToolbar } from "./components/navigation/RoutesToolbar";
 
 function App() {
   useEffect(() => {
@@ -42,14 +44,12 @@ function App() {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  className="inline-block w-6 h-6 stroke-current"
-                >
+                  className="inline-block w-6 h-6 stroke-current">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  ></path>
+                    d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
               </label>
             </div>
@@ -64,41 +64,10 @@ function App() {
                 {/* Navbar menu content here */}
 
                 <li className="w-full  flex items-center  justify-start gap-5 bg-muted">
-                  <Link
-                    to="/"
-                    activeProps={{ className: "text-info font-bold" }}
-                  >
-                    Home
-                  </Link>
-                  <Link
-                    to="/posts"
-                    activeProps={{ className: "text-info font-bold" }}
-                  >
-                    posts
-                  </Link>
-                  <Link
-                    to="/profile"
-                    activeProps={{ className: "text-info font-bold" }}
-                  >
-                    profile
-                  </Link>
-                  <Link
-                    to="/admin"
-                    activeProps={{ className: "text-info font-bold" }}
-                  >
-                    admin
-                  </Link>
+                  <RoutesToolbar />
                 </li>
 
-                <li className="flex items-center justify-evenly">
-                  <select data-choose-theme className=" select select-sm">
-                    <option value="">Default</option>
-                    <option value="lofi">Bonita</option>
-                    <option value="dark">Dark</option>
-                    <option value="light">light</option>
-                    <option value="cupcake">Cupcake</option>
-                  </select>
-                </li>
+                <ThemeToggle />
               </ul>
             </div>
           </div>
@@ -118,41 +87,10 @@ function App() {
             </div>
             <li
               onClick={() => setDrawerOpen(false)}
-              className="w-full h-full flex flex-col  items-center justify-start gap-5 bg-muted"
-            >
-              <Link to="/" activeProps={{ className: "text-info font-bold" }}>
-                Home
-              </Link>
-              <Link
-                to="/posts"
-                activeProps={{ className: "text-info font-bold" }}
-              >
-                posts
-              </Link>
-
-              <Link
-                to="/profile"
-                activeProps={{ className: "text-info font-bold" }}
-              >
-                profile
-              </Link>
-              <Link
-                to="/admin"
-                activeProps={{ className: "text-info font-bold" }}
-              >
-                admin
-              </Link>
+              className="w-full h-full flex flex-col  items-center justify-start gap-5 bg-muted">
+              <RoutesToolbar />
             </li>
-
-            <li className="w-full p-4 flex items-center justify-evenly gap-2">
-              <select data-choose-theme className=" select select-sm">
-                <option value="">Default</option>
-                <option value="bonita">Bonita</option>
-                <option value="dark">Dark</option>
-                <option value="light">light</option>
-                <option value="cupcake">Cupcake</option>
-              </select>
-            </li>
+            <ThemeToggle />
           </ul>
         </div>
       </div>

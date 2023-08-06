@@ -132,6 +132,6 @@ module.exports = {
   ],
   // daisyUI config (optional - here are the default values)
   daisyui: {
-    themes: ["cupcake", "luxury", "light","lofi"],
+    themes: ["cupcake", "luxury", "light","lofi","bumblebee"],
   },
 };

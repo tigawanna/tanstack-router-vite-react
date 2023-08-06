@@ -45,7 +45,7 @@ const routerContext = new RouterContext<{
 // Create a root route
 export const rootLayout = routerContext.createRootRoute({
   component: App,
-  errorComponent: ErrorComponent,
+  // errorComponent: ErrorComponent,
 });
 
 const routeTree = rootLayout.addChildren(routes);
