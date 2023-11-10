@@ -1,5 +1,5 @@
 import { rootLayout } from "@/main";;
-import { Route } from "@tanstack/router";
+import { Route } from "@tanstack/react-router";
 import { WelcomePage } from "./Welcome";
 import { WelcomeLayout } from "./WelcomeLayout";
 

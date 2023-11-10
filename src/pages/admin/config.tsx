@@ -1,4 +1,4 @@
-import { Route } from "@tanstack/router";
+import { Route } from "@tanstack/react-router";
 import { rootLayout } from "@/main";
 import { AdminLayout } from "./AdminLayout";
 import { AdminPage } from "./AdminPage";

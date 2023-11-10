@@ -1,4 +1,4 @@
-import { Route } from "@tanstack/router";
+import { Route } from "@tanstack/react-router";
 import { PostsLayout } from "./PostsLayout";
 import { PostsPage } from "./PostsPage";
 import { fetchPostById, fetchPosts } from "../../state/posts/query";

@@ -1,4 +1,4 @@
-import { useParams, useRouter } from "@tanstack/router";
+import { useParams, useRouter } from "@tanstack/react-router";
 import { userDetailsRoute } from "./config";
 import { BreadCrumbs } from "@/components/navigation/BreadCrumbs";
 

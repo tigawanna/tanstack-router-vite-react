@@ -1,4 +1,4 @@
-import { Outlet, useRouter } from "@tanstack/router";
+import { Outlet, useRouter } from "@tanstack/react-router";
 import { useEffect } from "react";
 
 interface AdminLayoutProps {}

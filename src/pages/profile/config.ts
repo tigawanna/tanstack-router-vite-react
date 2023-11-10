@@ -1,4 +1,4 @@
-import { Route } from "@tanstack/router";
+import { Route } from "@tanstack/react-router";
 import { ProfilePage } from "./ProfilePage";
 import { ProfileLayout } from "./ProfileLayout";
 import { ProfileUser } from "./ProfileUser";

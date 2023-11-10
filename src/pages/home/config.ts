@@ -1,4 +1,4 @@
-import { Route } from "@tanstack/router";
+import { Route } from "@tanstack/react-router";
 import { HomePage } from "./HomePage";
 import { rootLayout } from "@/main";
 

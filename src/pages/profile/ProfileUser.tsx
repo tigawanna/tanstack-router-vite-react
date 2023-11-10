@@ -1,5 +1,5 @@
 import { BreadCrumbs } from "@/components/navigation/BreadCrumbs";
-import { Link, useParams, useRouter } from "@tanstack/router";
+import { Link, useParams, useRouter } from "@tanstack/react-router";
 
 interface ProfileUserProps {}
 

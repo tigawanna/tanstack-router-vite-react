@@ -1,4 +1,4 @@
-import { Outlet } from "@tanstack/router";
+import { Outlet } from "@tanstack/react-router";
 interface PostsLayoutProps {}
 
 export function PostsLayout({}: PostsLayoutProps) {

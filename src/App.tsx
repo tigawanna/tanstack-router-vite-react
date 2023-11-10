@@ -1,4 +1,4 @@
-import { Link, Outlet, useRouter } from "@tanstack/router";
+import { Link, Outlet, useRouter } from "@tanstack/react-router";
 import { Suspense, useEffect, useState } from "react";
 import { themeChange } from "theme-change";
 import { Nprogress } from "./components/navigation/pprogress/Nprogress";

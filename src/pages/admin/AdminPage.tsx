@@ -1,4 +1,4 @@
-import { useRouter } from "@tanstack/router";
+import { useRouter } from "@tanstack/react-router";
 
 interface AdminPageProps {}
 
@@ -7,7 +7,7 @@ export function AdminPage({}: AdminPageProps) {
 
   function logoutUser() {
     localStorage.removeItem("is_authed");
-    router.reload();
+  
   }
   return (
     <div className="w-full h-full min-h-screen flex flex-col border items-center justify-center gap-10 ">

@@ -11,7 +11,8 @@ import {
   Router,
   RouterContext,
   RouterProvider,
-} from "@tanstack/router";
+  rootRouteWithContext,
+} from "@tanstack/react-router";
 
 import App from "./App";
 import { routes } from "./pages/routes/routes";
@@ -38,14 +39,22 @@ export const queryClient: QueryClient = new QueryClient({
   },
 });
 
-const routerContext = new RouterContext<{
-  queryClient: typeof queryClient;
-}>();
+// const routerContext = new RouterContext<{
+//   queryClient: typeof queryClient;
+// }>();
 
 // Create a root route
-export const rootLayout = routerContext.createRootRoute({
+// export const rootLayout = routerContext.createRootRoute({
+//   component: App,
+//   // errorComponent: ErrorComponent,
+// });
+
+interface MyRouterContext {
+  queryClient: QueryClient;
+}
+
+export const rootLayout = rootRouteWithContext<MyRouterContext>()({
   component: App,
-  // errorComponent: ErrorComponent,
 });
 
 const routeTree = rootLayout.addChildren(routes);
@@ -58,7 +67,7 @@ export const router = new Router({
 });
 
 // Register your router for maximum type safety
-declare module "@tanstack/router" {
+declare module "@tanstack/react-router" {
   interface Register {
     router: typeof router;
   }

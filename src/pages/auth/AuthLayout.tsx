@@ -1,4 +1,4 @@
-import { Outlet, useRouter, useSearch } from "@tanstack/router";
+import { Outlet, useRouter, useSearch } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { authlayout } from "./config";
 
