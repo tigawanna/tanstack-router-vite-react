@@ -1,115 +1,140 @@
 # React + TypeScript + Tanstack Router
- 
- This is a basic starter template for React + TypeScript + Tanstack Router.
 
-it comprises of 
+This is a basic starter template for React + TypeScript + Tanstack Router.
 
-  |   Path        |       Description        |
-  |---------------|---------------------------|
-  |  /            |    root layout + route      |
-  |  /profile     |    profile route            |
-  |  /profile/$id  | dynamic profile route |
-  |  /admin       |  protected route       |
-  |  /auth/ | login route (will redirect if already logged in) |
-  | /posts       | posts route + query loader |
-  | /post       | post route + query loader |
+it comprises of
 
+| Path   | Description                                      |
+| ------ | ------------------------------------------------ |
+| /      | root layout + route                              |
+| /admin | protected route                                  |
+| /auth/ | login route (will redirect if already logged in) |
+| /posts | posts route + query loader                       |
+| /post  | post route + query loader                        |
 
- # tips
- - to use params in routes ( dynamic routes )
-  
- 
+# tips
+
+- to use params in routes ( dynamic routes )
+
 ```ts
-  const userRoute = new Route({
+const userRoute = new Route({
   getParentRoute: () => profileLayout,
   path: "$id",
-  component: ProfileUser
-})
+  component: ProfileUser,
+});
 ```
 
-```tsx 
+```tsx
   <Link to="/profile/$id" params={{ id: "marko" }}>
         Marko Profile
       </Link>
       <Link to="/profile/$id" params={{ id: "polo" }}>
         Polo Profile
       </Link>
-  ```
-
+```
 
 - to use search params
 
 ```tsx
-  export const authlayout = new Route({
+export const authlayout = new Route({
   getParentRoute: () => rootLayout,
   path: "auth",
   component: AuthLayout,
   validateSearch: (search: Record<string, unknown>): AuthSearch => {
     // validate and parse the search params into a typed state
     return {
-      // you can use zod or valibot to validate this 
+      // you can use zod or valibot to validate this
       redirect: (search.redirect as string) ?? "/",
     };
   },
 });
 ```
+
+To auth guard routes we use the beforeLoad
 ```ts
-   import { authlayout } from "./config";
-  const router = useRouter();
-// include the route id for better typesafety
-  const { redirect } = useSearch({ from: authlayout.id });
+import { Route, redirect, useRouter } from "@tanstack/react-router";
+import { adminLayout } from "./AdminLayout";
 
-  //  if already , redirect fomr the login page to the recent page
-  useEffect(() => {
-    if (is_authed) {
-      router.navigate({
-        to: redirect,
-        // @ts-expect-error
-        search: (prev) => ({ redirect: prev?.redirect }),
-      });
-    }
-  });
-```
 
-- The above is being used in conjunction with a layout level auth guard
 
-```tsx
-import { Outlet, useRouter } from "@tanstack/router";
-import { useEffect } from "react";
-
-interface AdminLayoutProps {}
-
-export function AdminLayout({}: AdminLayoutProps) {
-  const ls_is_authed = localStorage.getItem("is_authed");
-  const is_authed = ls_is_authed === "true";
-  const router = useRouter();
-  useEffect(() => {
-    if (!is_authed) {
-      router.navigate({
+export const adminIndexRoute = new Route({
+  getParentRoute: () => adminLayout,
+  path: "/",
+  beforeLoad: async() => {
+   
+    if(localStorage.getItem("admin") === null) {
+      throw redirect({
         to: "/auth",
         search: {
-          redirect: "/admin",
+          // Use the current location to power a redirect after login
+          // (Do not use `router.state.resolvedLocation` as it can
+          // potentially lag behind the actual current location)
+          // redirect: router.state.location.href,
+          redirect: "/",
         },
       });
     }
-  });
+  },
+
+  component: ({  }) => {
+  const router = useRouter()
   return (
-    <div className="w-full min-h-full flex flex-col items-center justify-center">
-      <Outlet />
-    </div>
-  );
-}
+      <div className="w-full h-full flex items-center justify-center">
+        <h3>Admin only section</h3>
+        <button 
+        onClick={() => {
+          localStorage.removeItem("admin");
+          router.navigate({to: "."});
+        }}
+        className="btn btn-sm">
+          Logout
+        </button>
+      </div>
+    );
+  },
+});
+
+
 ```
-- to get type safety the loaders you can import the route and use the loader from that
+Once logged in we redirect authenticated users from the login pages
 
 ```ts
-  const postsQuery = postsIndexRoute.useLoader()();
+import { rootLayout } from "@/main";
+import { Outlet, Route, redirect, useRouter } from "@tanstack/react-router";
+import { adminIndexRoute } from "./auth";
+
+
+export const authlayout = new Route({
+  getParentRoute: () => rootLayout,
+  path: "auth",
+  beforeLoad: async () => {
+
+    if (localStorage.getItem("admin") !== null) {
+      throw redirect({
+        to: "/",
+        });
+    }
+  },
+  component: () => {
+    return (
+      <div className="w-full h-full flex items-center ">
+        <Outlet />
+      </div>
+    );
+  },
+});
+
+export const authRoute = authlayout.addChildren([adminIndexRoute]);
+
+
 ```
+
 - you can listen for navigation pending state and show a NProgress bar for better UX
+
 ```tsx
   const router = useRouter();
   const status = router.state.status;
-  ---- 
-  ---- 
+  ----
+  ----
   <Nprogress isAnimating={status === "pending"} />
 ```
