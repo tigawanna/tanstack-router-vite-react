@@ -7,9 +7,9 @@ import {
   MutationCache,
 } from "@tanstack/react-query";
 import {
-  ErrorComponent,
+
   Router,
-  RouterContext,
+
   RouterProvider,
   rootRouteWithContext,
 } from "@tanstack/react-router";
