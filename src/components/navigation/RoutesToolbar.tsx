@@ -1,10 +1,11 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useRouter, useRouterState } from "@tanstack/react-router";
 
 interface RoutesToolbarProps {
 
 }
 
 export function RoutesToolbar({}:RoutesToolbarProps){
+  const {routeTree} = useRouter()
 return (
   <div className="flex flex-col md:flex-row gap-3">
     <Link to="/" activeProps={{ className: "text-info font-bold" }}>
@@ -14,9 +15,6 @@ return (
       posts
     </Link>
 
-    <Link to="/profile" activeProps={{ className: "text-info font-bold" }}>
-      profile
-    </Link>
     <Link to="/admin" activeProps={{ className: "text-info font-bold" }}>
       admin
     </Link>

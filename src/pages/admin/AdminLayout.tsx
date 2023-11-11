@@ -1,12 +1,13 @@
 import { rootLayout } from "@/main";
 import { Outlet, Route } from "@tanstack/react-router";
-import { postsIndexRoute } from "./Posts";
-import { onePostRoute } from "./OnePost";
+import { adminIndexRoute } from "./admin";
 
 
-export const postsLayout = new Route({
+
+
+export const adminLayout = new Route({
   getParentRoute: () => rootLayout,
-  path: "posts",
+  path: "admin",
   component:()=>{
     return (
       <div className="w-full h-full flex items-center ">
@@ -16,4 +17,4 @@ export const postsLayout = new Route({
   }
 });
 
-export const postsRoute = postsLayout.addChildren([postsIndexRoute, onePostRoute]);
+export const adminRoute = adminLayout.addChildren([adminIndexRoute]);
